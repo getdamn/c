@@ -3,7 +3,51 @@
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 //Testing P-Partioning Algorithm
-
+void prnt_arr(int len, char* arr);
+int p_rec(int p_num, int level, int num, char* res);
+char* p_part(int p_num, int num);
+void prnt_arr(int len, char* arr)
+{
+	int i = 0;
+	printf("[");
+	for(i = 0; i<len - 1; i++)
+		printf("%d, ",arr[i]);
+	printf("%d", arr[len - 1]);
+	printf("]");
+	printf("\n");
+}
+int p_rec(int p_num, int level, int num, char* res)
+{
+	/*	INPUT	(int) p_num : Number to part,
+				(int) level : interger to count part number and an condition variable to exit,
+				(int) num : Number to be parted,
+				(int) res : Pointer of result
+		OUTPUT	(void)
+		Des: Excute Recursive part of P-Partitioning
+		Ex) p_rec(part, 0, num, res);
+	*/
+	int i, rep; //rep : the number to be repeated
+	int sum = 0;
+	for(i = 0; i < level; i++) sum+= res[i];	//Calculate sum to caculate remain to be parted
+	
+	if(level == (p_num-1))
+	{	//if level reach last level
+		res[level] = num - sum;
+		prnt_arr(p_num, res);	//print result of p-part
+		return 0;	//when the last level ends, returns 0
+	}	
+	else if(level == 0)	//if level's status is initial(level == 0)
+		rep = num + 1;	//rep is num+1 because first element of p-part can be 0 to num
+	else
+		rep = num - sum + 1;
+		
+	for(i = 0; i < rep; i++)
+	{
+		res[level] = i;
+		p_rec(p_num, level+1, num, res);
+	}
+	return 0;	//when a level ends, returns 0
+}
 char* p_part(int p_num, int num)
 {
 	/*	INPUT	(int) p_num : Number to part, 
@@ -14,42 +58,11 @@ char* p_part(int p_num, int num)
 	*/
 	char* res = (char*)malloc(sizeof(char)*p_num);//result of p_part
 	p_rec(p_num, 0, num, res);//short of p_recusive:recursive part of p_part
+	return res;
 }
 
-void p_rec(int part, int level, int num, char* res)
-{
-	/*	INPUT	(int) part : Number to part,
-				(int) level : interger to count part number and an condition variable to exit,
-				(int) num : Number to be parted,
-				(int) res : Pointer of result
-		OUTPUT	(void)
-		Des: Excute Recursive part of P-Partitioning
-		Ex) p_rec(part, 0, num, res);
-	*/
-	int i, sum, rep; //rep : the number to be repeated
-	for(i = 0; i < level; i++) sum+= res[i];	//Calculate sum to caculate remain to be parted
-	
-	if(level == (num-1))	//if level reach last level
-		prnt_arr(num, res);	//print result of p-part
-	else if(level == 0)	//if level's status is initial(level == 0)
-		rep = num + 1;	//rep is num+1 because first element of p-part can be 0 to num
-	else
-		rep = num - sum + 1;
-		
-	for(i = 0; i < rep; i++)
-	{
-		p_rec(part, layer+1, num, res);
-	}
-}
-void prnt_arr(int len, char* arr)
-{
-	int i = 0;
-	for(i = 0; i<len; i++)
-		printf("%d",arr[i]);
-	printf("\n")
-}
+
 int main(int argc, char *argv[]) {
-	
-	fct(0);
+	p_part(3,5);
 	return 0;
 }
