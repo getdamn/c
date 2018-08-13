@@ -3,12 +3,9 @@
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 //Testing P-Partioning Algorithm
-void prnt_arr(int len, char* arr);
-int p_rec(int p_num, int level, int num, char* res);
-char* p_part(int p_num, int num);
-void prnt_arr(int len, char* arr)
+void prnt_arr(const int len, const char* const arr)
 {
-	int i = 0;
+	int i = 0;	//Prints array with numbers
 	printf("[");
 	for(i = 0; i<len - 1; i++)
 		printf("%d, ",arr[i]);
@@ -16,7 +13,7 @@ void prnt_arr(int len, char* arr)
 	printf("]");
 	printf("\n");
 }
-int p_rec(int p_num, int level, int num, char* res)
+int p_rec(const int p_num, int level, const int num, char* const res)
 {
 	/*	INPUT	(int) p_num : Number to part,
 				(int) level : interger to count part number and an condition variable to exit,
@@ -43,12 +40,12 @@ int p_rec(int p_num, int level, int num, char* res)
 		
 	for(i = 0; i < rep; i++)
 	{
-		res[level] = i;
+		res[level] = i; //Input a number of occasion
 		p_rec(p_num, level+1, num, res);
 	}
 	return 0;	//when a level ends, returns 0
 }
-char* p_part(int p_num, int num)
+char* p_part(const int p_num, const int num)
 {
 	/*	INPUT	(int) p_num : Number to part, 
 				(int) num : Number to be parted
@@ -56,13 +53,15 @@ char* p_part(int p_num, int num)
 		Des : Excute P-Partioning by Number to part and Number to parted.
 		Ex) p_part(part, num);
 	*/
-	char* res = (char*)malloc(sizeof(char)*p_num);//result of p_part
+	char* const res = (char*)malloc(sizeof(char)*p_num);//result of p_part
 	p_rec(p_num, 0, num, res);//short of p_recusive:recursive part of p_part
-	return res;
+	return res;	//Please free allocated memory
 }
 
 
 int main(int argc, char *argv[]) {
-	p_part(3,5);
+	printf("P-Partioing Start\n");
+	p_part(3,10); 
+	printf("P-Partitioning End\n");
 	return 0;
 }
