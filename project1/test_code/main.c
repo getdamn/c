@@ -7,7 +7,7 @@
 char* p_part(int p_num, int num)
 {
 	/*	INPUT	(int) p_num : Number to part, 
-				(int) num : Number to parted
+				(int) num : Number to be parted
 		OUTPUT (char*) res : Pointer of result
 		Des : Excute P-Partioning by Number to part and Number to parted.
 		Ex) p_part(part, num);
@@ -20,7 +20,7 @@ void p_rec(int part, int level, int num, char* res)
 {
 	/*	INPUT	(int) part : Number to part,
 				(int) level : interger to count part number and an condition variable to exit,
-				(int) num : Number to parted,
+				(int) num : Number to be parted,
 				(int) res : Pointer of result
 		OUTPUT	(void)
 		Des: Excute Recursive part of P-Partitioning
