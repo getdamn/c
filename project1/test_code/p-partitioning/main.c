@@ -61,7 +61,8 @@ char* p_part(const int p_num, const int num)
 
 int main(int argc, char *argv[]) {
 	printf("P-Partioing Start\n");
-	p_part(3,10); 
+	p_part(5,4); 
 	printf("P-Partitioning End\n");
+	system("PAUSE");
 	return 0;
 }
