@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
 void prnt_arr(const int len, const char* const arr)
 {
 	int i = 0;	//Prints array with numbers
@@ -12,6 +13,7 @@ void prnt_arr(const int len, const char* const arr)
 	printf("]");
 	printf("\n");
 }
+
 int p_rec(const int p_num, int level, const int num, char* const res)
 {
 	/*	INPUT	(int) p_num : Number to part,
@@ -29,6 +31,7 @@ int p_rec(const int p_num, int level, const int num, char* const res)
 	if (level == (p_num - 1))
 	{	//if level reach last level
 		res[level] = num - sum;
+		
 		prnt_arr(p_num, res);	//print result of p-part
 		return 0;	//when the last level ends, returns 0
 	}
