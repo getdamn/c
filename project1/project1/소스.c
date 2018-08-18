@@ -8,7 +8,13 @@
 #define CROSS -1
 #define FILL 1
 #define EMPTY 0
-int nemo_size = 10;
+int nemo_size;
+
+void arr_init(int len, char* arr, char init)
+{
+	int i;
+	for (i = 0; i < len; i++) arr[i] = init;
+}
 void prnt_arr(const int len, const char* const arr)
 {
 	int i = 0;	//Prints array with numbers
@@ -73,10 +79,18 @@ void dac(char* org, char* res, char* parr, char* nlist, int plen)
 	int len = 2 * plen - 1; //len for loop
 	for (i = 0; i < len; i++)
 	{
-		if ((i % 2) == 0)//
+		if ((i % 2) == 0)
 		{
-			for (j = 0; j < parr[i / 2]; j++)
-				arr_case[cnt++] = CROSS;
+			if (((i / 2) == 0) || ((i / 2) == (len - 1) / 2))
+			{
+				for (j = 0; j < parr[i / 2]; j++)
+					arr_case[cnt++] = CROSS;
+			}
+			else
+			{
+				for (j = 0; j < (parr[i / 2] + 1); j++)
+					arr_case[cnt++] = CROSS;
+			}
 		}
 		else
 		{
@@ -84,7 +98,7 @@ void dac(char* org, char* res, char* parr, char* nlist, int plen)
 				arr_case[cnt++] = FILL;
 		}
 	}
-
+	prnt_arr(nemo_size, arr_case);
 	if (iea(org, nemo_size, EMPTY) == TRUE) //short of 'is empty string'
 	{
 		if (iea(res, nemo_size, EMPTY) == TRUE) //if result is empty, fill case in result...
@@ -115,12 +129,15 @@ void dac(char* org, char* res, char* parr, char* nlist, int plen)
 		}
 	}
 }
-int p_rec(const int p_num, int level, const int num, char* const parr, char* org, char* nlist)
+int p_rec(const int p_num, int level, const int num, char* const parr, char* org, char* nlist, char* res)
 {
 	/*	INPUT	(int) p_num : Number to part,
 	(int) level : interger to count part number and an condition variable to exit,
 	(int) num : Number to be parted,
-	(int) res : Pointer of result
+	(int) parr : Pointer of p-partition
+	(char*)parr:array saves p-parted numbers
+	(char*)nlist:array saves number list
+	(char*)res: Result of dac..
 	OUTPUT	(void)
 	Des: Excute Recursive part of P-Partitioning
 	Ex) p_rec(part, 0, num, res);
@@ -132,8 +149,7 @@ int p_rec(const int p_num, int level, const int num, char* const parr, char* org
 	if (level == (p_num - 1))
 	{	//if level reach last level
 		parr[level] = num - sum;
-		
-		prnt_arr(p_num, parr);	//print result of p-part
+		dac(org, res, parr, nlist, p_num);
 		return 0;	//when the last level ends, returns 0
 	}
 	else if (level == 0)	//if level's status is initial(level == 0)
@@ -144,11 +160,11 @@ int p_rec(const int p_num, int level, const int num, char* const parr, char* org
 	for (i = 0; i < rep; i++)
 	{
 		parr[level] = i; //Input a number of occasion
-		p_rec(p_num, level + 1, num, parr);
+		p_rec(p_num, level + 1, num, parr, org, nlist, res);
 	}
 	return 0;	//when a level ends, returns 0
 }
-char* p_part(const int p_num, const int num)
+char* p_part(const int p_num, const int num, char* org, char* nlist)
 {
 	/*	INPUT	(int) p_num : Number to part,
 	(int) num : Number to be parted
@@ -156,13 +172,24 @@ char* p_part(const int p_num, const int num)
 	Des : Excute P-Partioning by Number to part and Number to parted.
 	Ex) p_part(part, num);
 	*/
-	char* const res = (char*)malloc(sizeof(char)*p_num);//result of p_part
-	p_rec(p_num, 0, num, res);//short of p_recusive:recursive part of p_part
+	int i = 0;
+	char* const parr = (char*)malloc(sizeof(char)*p_num);//result of p_part
+	char* res = (char*)malloc(sizeof(char) * nemo_size);
+	for (i = 0; i < nemo_size; i++) res[i] = 0;
+
+	p_rec(p_num, 0, num, parr, org, nlist, res);//short of p_recusive:recursive part of p_part
 	return res;	//Please free allocated memory
 }
 
 int main(int argc, char *argv[]) {
+	nemo_size = 0;
+	int p_num = 4;
+	int num = 5;
+	char org[] = { -1,0,0,-1,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,-1 };
+	char nlist[] = { 2,1,10 };
 	
+	char* res = p_part(p_num, num, org, nlist);
+	prnt_arr(nemo_size, res);
 	system("PAUSE");
 	return 0;
 }
