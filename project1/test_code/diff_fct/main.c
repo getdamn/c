@@ -25,6 +25,15 @@ void prnt_arr(const int len, const char* const arr)
 }
 int iea(char* arr, int len, char emp_char)
 {
+	/*	DES:	Short of is empty array
+				Returns input array is empty or not
+		INPUT	(char*)arr:	array to be checked as empty
+				(int)len:	length of array
+				(char)emp_char:	character recognized as empty
+		OUTPUT	(int)TRUE
+				(int)FALSE
+		Ex) iea(arr, 5, 0); iea(arr, 5, '\0');
+	*/
 	int i;
 	for(i = 0; i < len; i ++)
 		if(arr[i] != emp_char) return FALSE;
@@ -32,6 +41,15 @@ int iea(char* arr, int len, char emp_char)
 }
 int issub(char* case_arr, char* comp, int len, char emp_char) //chk case_arr is sub
 {
+	/*	DES: Returns TRUE if case_arr is subordinated to comp.
+		INPUT	(char*)case_arr:	array to be checked as subordinated
+				(char*)comp: 		array to be compared
+				(int)len:			length of arraies
+				(char)emp_char:		character to be recognized as empty
+		OUTPUT	(int)TRUE
+				(int)FALSE
+		Ex)	issub(arr, arr2, 5, 0); issub(arr, arr2, 5, '0');
+	*/
 	int i;
 	for(i = 0; i < len; i++)
 		if((comp[i] !=  emp_char) & (comp[i] != case_arr[i]))
@@ -40,7 +58,16 @@ int issub(char* case_arr, char* comp, int len, char emp_char) //chk case_arr is 
 }
 void dac(char* org, char* res, char* parr, char* nlist, int plen)
 {
-	//short of 'diff_arr_checker'
+	/*	DES:	Short of Difference array check
+				Assign res result of differences of arraies
+		INPUT	(char*)org:	Orignal array
+				(char*)res: array to be saved as result
+				(char*)parr:array saves p-parted numbers
+				(char*)nlist:array saves number list
+				(int)plen: length of parr
+		OUTPUT	(void)
+		Ex) dac(org, res, parr, nlist, 5);
+	*/
 	char* arr_case = (char*)malloc(sizeof(char) * nemo_size);//arr_case organizing
 	int i, j;
 	int cnt = 0;
@@ -88,11 +115,6 @@ void dac(char* org, char* res, char* parr, char* nlist, int plen)
 			}
 		}
 	}
-	//TEST CASE
-	printf("case: ");
-	prnt_arr(nemo_size, arr_case);
-	printf("orgin : ");
-	prnt_arr(nemo_size, res);
 }
 int main(int argc, char *argv[]) {
 	char org[] = {1,0,0,0,0,0,0,0,0,0};
