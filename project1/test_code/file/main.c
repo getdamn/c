@@ -17,7 +17,7 @@ char** arr_2d_maker(int col, int row)
 	int i;
 	char** arr_2d = (char**)malloc(sizeof(char*)*col);
 	for(i = 0; i < col; i++)
-		arr_2d = arr_maker(row);
+		arr_2d[i] = arr_maker(row);
 	return arr_2d; 
 }
 void arr_2d_init(char** arr, int col, int row, int init_char)
@@ -28,6 +28,53 @@ void arr_2d_init(char** arr, int col, int row, int init_char)
 		for(j = 0; j < row; j++)
 			arr[i][j] = init_char;
 	}
+}
+char* spl_arr(const char* const arr, const int len)
+{
+	if(len > 100)
+	{
+		printf("Function:spl_arr Error, Check the parameter, len");
+		return NULL;
+	}
+	int i, buf[100];
+	int cnt = 0; 
+	int num = 0;
+	int NE_len = len - 1;//null exterminated len
+	for(i = 0; i < NE_len; i++)
+	{
+		if(arr[i] == ' ')
+		{
+			if(i == 0)
+			{
+				fputs("Fnction,spl_arr Error, Invalid Input",stdout);
+				return NULL;
+			}
+			
+			else
+			{
+				buf[cnt] = num;
+				num = 0;
+				cnt++;
+			}
+		}
+		else if(i == (NE_len - 1))
+		{
+			num = (num * 10) + arr[i] - 48;//char to interger
+			if((num > 255) && (num < 0))
+			{
+				fputs("Function spl_arr Error: overflow occured",stdout);
+				return NULL;
+			}
+			buf[cnt] = num;	
+			cnt++;
+		}
+		else
+			num = (num * 10) + arr[i] - 48;
+	}	
+	char* sp_arr = (char*)malloc(sizeof(char)*cnt);//splited arr
+	for(i = 0; i < cnt; i++)
+		sp_arr[i] = buf[i];
+	return sp_arr;//please free later
 }
 int main(int argc, char *argv[]) {
 	FILE* fp = fopen("test.txt","rt");
@@ -44,10 +91,24 @@ int main(int argc, char *argv[]) {
 	char** col_nlist = db_ptr_maker(nemo_size);
 	char** row_nlist = db_ptr_maker(nemo_size);
 	//make nlists(numeral hints)
-	while(!feof(fp))
+ 	int i;
+	for(i = 0; i < nemo_size; i++)
 	{
 		fgets(buf, 101, fp);
-		
+		col_nlist[i] = spl_arr(buf, strlen(buf));
 	}
+	fgets(buf, 101, fp);//Enter
+	for(i = 0; i < nemo_size; i++)
+	{
+		fgets(buf, 101, fp);
+		row_nlist[i] = spl_arr(buf, strlen(buf));
+	}
+	if(!feof(fp))
+	{
+		printf("Input File Error Please check input file");
+		return -1;
+	}
+	
+	
 	return 0;
 }
