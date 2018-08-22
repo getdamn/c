@@ -1,0 +1,6 @@
+﻿  ConsoleApplication1.c
+c:\users\qowlt\onedrive\바탕 화면\플밍\c\nonogram_solver\consoleapplication1\consoleapplication1\consoleapplication1.c(27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\qowlt\onedrive\바탕 화면\플밍\c\nonogram_solver\consoleapplication1\consoleapplication1\consoleapplication1.c(40): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\qowlt\onedrive\바탕 화면\플밍\c\nonogram_solver\consoleapplication1\consoleapplication1\consoleapplication1.c(108): warning C4101: 'j' :참조되지 않은 지역 변수입니다.
+c:\users\qowlt\onedrive\바탕 화면\플밍\c\nonogram_solver\consoleapplication1\consoleapplication1\consoleapplication1.c(68): warning C4716: 'nono_solver': 값을 반환해야 합니다.
+  ConsoleApplication1.vcxproj -> C:\Users\qowlt\OneDrive\바탕 화면\플밍\c\nonogram_solver\ConsoleApplication1\Debug\ConsoleApplication1.exe
